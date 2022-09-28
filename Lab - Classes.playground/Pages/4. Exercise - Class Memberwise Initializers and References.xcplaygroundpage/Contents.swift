@@ -35,7 +35,7 @@ class Fighter: Spaceship {
     var remainingFirePower: Int
 
     
-    init(weapon: String, remainingFirePower: Int) {
+    init(name: String, health: Int, position: Int, weapon: String, remainingFirePower: Int) {
         self.weapon = weapon
         self.remainingFirePower = remainingFirePower
         super.init(name: name, health: health, position: position)
@@ -59,12 +59,12 @@ class ShieldedShip: Fighter {
         } else {
             super.wasHit()
         }
-        
-        init(shieldStrength: Int) {
-            self.shieldStrength = shieldStrength
-            super.init(weapon: weapon, remainingFirePower: remainingFirePower)
-        }
     }
+        
+        init(name: String, health: Int, position: Int, shieldStrength: Int, weapon: String, remainingFirePower: Int){
+            self.shieldStrength = shieldStrength
+            super.init(name: name, health: health, position: position, weapon: weapon, remainingFirePower: remainingFirePower)
+        }
 }
 /*:
  Note that each class above has an error by the class declaration that says "Class has no initializers." Unlike structs, classes do not come with memberwise initializers because the standard memberwise initializers don't always play nicely with inheritance. You can get rid of the error by providing default values for everything, but it is common, and better practice, to simply write your own initializer. Go to the declaration of `Spaceship` and add an initializer that takes in an argument for each property on `Spaceship` and sets the properties accordingly.
@@ -78,18 +78,23 @@ var falcon = Spaceship(name: "Falcon", health: 100, position: 0)
 
  Then create an instance of `Fighter` below called `destroyer`. Use the memberwise initializer you just created. The ship's name should be "Destroyer."
  */
-
+var destroyer = Fighter(name: "Destroyer", health: 100, position: 0, weapon: "Laser", remainingFirePower: 10)
 
 /*:
  Now go add an initializer to `ShieldedShip` that takes an argument for each property on `ShieldedShip`, `Fighter`, and `Spaceship`, and sets the properties accordingly. Remember that you can call through to the initializer on `Fighter` using `super.init`.
 
  Then create an instance of `ShieldedShip` below called `defender`. Use the memberwise initializer you just created. The ship's name should be "Defender."
  */
-
+var defender = ShieldedShip(name: "Defender", health: 100, position: 0, shieldStrength: 25, weapon: "Gun", remainingFirePower: 10)
 
 //:  Create a new constant named `sameShip` and set it equal to `falcon`. Print out the position of `sameShip` and `falcon`, then call `moveLeft()` on `sameShip` and print out the position of `sameShip` and `falcon` again. Did both positions change? Why? If both were structs instead of classes, would it be the same? Why or why not? Provide your answer in a comment or print statement below.
-
-
+let sameShip = falcon
+print(sameShip.position)
+print(falcon.position)
+falcon.moveLeft()
+print(sameShip.position)
+print(falcon.position)
+//They both changed because they have a class and subclass relationship. It wouldnt be the same if they were structs because they cant takke the same variables/methods, etc.
 /*:
  _Copyright © 2021 Apple Inc._
 
